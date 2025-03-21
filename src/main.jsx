@@ -1,24 +1,34 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import TicTacToe from './TicTacToe.jsx'
-import TicTacToeProvider from './TicTacToeProvider.jsx'
-import CheckBoxes from './CheckBoxes.jsx'
-import CheckApp from './CheckApp.jsx'
-import CheckAppProvider from './CheckAppProvider.jsx'
-
-//  return App()
-
-    {/* <TicTacToeProvider>
-      <TicTacToe />
-    </TicTacToeProvider> */}
+import MyPokemon from './pokemon/MyPokemon'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
+import Login from './pokemon/Login';
+import AllPokemon from './pokemon/AllPokemon';
 
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <CheckAppProvider>
-      <CheckApp />
-    </CheckAppProvider>
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MyPokemon />,
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/allpokemon",
+    element: <AllPokemon />
+  }
+]);
 
-  </StrictMode>,
-)
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
