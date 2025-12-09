@@ -1,0 +1,653 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+/* --- body rule --- */
+body {
+  background-color: #f0f2f5;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* --- Navbar Styles --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2c3e50;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ecf0f1;
+  text-decoration: none;
+}
+
+.nav-menu-wrapper {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-links,
+.navbar-links-mocked {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 1rem;
+  padding-bottom: 5px;
+  transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  border-bottom: 3px solid transparent;
+}
+.nav-link:hover {
+  color: #ffffff;
+}
+.nav-link.active-link {
+  color: #ffffff;
+  font-weight: 600;
+  border-bottom-color: #3498db;
+}
+
+/* --- Navbar Mobile --- */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1010;
+}
+.nav-toggle .hamburger-icon {
+  display: block;
+  position: relative;
+  width: 24px;
+  height: 2px;
+  background-color: #ecf0f1;
+  transition: all 0.2s ease-in-out;
+}
+.nav-toggle .hamburger-icon::before,
+.nav-toggle .hamburger-icon::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: #ecf0f1;
+  left: 0;
+  transition: all 0.2s ease-in-out;
+}
+.nav-toggle .hamburger-icon::before {
+  top: -8px;
+}
+.nav-toggle .hamburger-icon::after {
+  top: 8px;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+  .nav-menu-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  .navbar.nav-open .nav-menu-wrapper {
+    transform: translateY(0);
+  }
+  .navbar-links,
+  .navbar-links-mocked {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .nav-link {
+    font-size: 1.5rem;
+  }
+  .navbar.nav-open .nav-toggle .hamburger-icon {
+    background-color: transparent;
+  }
+  .navbar.nav-open .nav-toggle .hamburger-icon::before {
+    transform: rotate(45deg) translate(5px, 7px);
+  }
+  .navbar.nav-open .nav-toggle .hamburger-icon::after {
+    transform: rotate(-45deg) translate(5px, -7px);
+  }
+}
+
+/* Basic Cell Style */
+.sudoku-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  color: #3498db; 
+  font-weight: 500;
+  width: 10vw;
+  height: 10vw;
+  max-width: 45px;
+  max-height: 45px;
+  font-size: 1.5rem;
+}
+
+/* Puzzle Style */
+.sudoku-cell.cell-initial {
+  color: #333; 
+  font-weight: 700; 
+  background-color: #f0f0f0; 
+  cursor: not-allowed;
+}
+
+/* Wrong number style */
+.sudoku-cell.cell-incorrect {
+  background-color: #ffebee; 
+  border: 2px solid #c62828; 
+  color: #c62828; 
+  margin: -1px;
+}
+
+/* Hint color */
+.sudoku-cell.cell-hinted {
+  background-color: #dff0d8; 
+  border: 2px solid #3c763d; 
+  color: #3c763d;
+  margin: -1px;
+}
+
+/* choose color */
+.sudoku-cell.cell-selected {
+  background-color: #e7f3ff; 
+  border: 2px solid #3498db; 
+  margin: -1px;
+}
+
+.size-6 .sudoku-cell {
+  width: 15vw;
+  height: 15vw;
+  max-width: 50px;
+  max-height: 50px;
+}
+
+@media (max-width: 480px) {
+  .sudoku-cell {
+    max-width: none;
+    max-height: none;
+    font-size: 1.2rem;
+  }
+
+  .controls-area {
+    padding: 0.5rem;
+    flex-basis: auto; 
+  }
+  .number-pad {
+    gap: 5px;
+    margin: 1rem 0;
+  }
+  .number-pad button {
+    padding: 0.75rem 0;
+  }
+}
+
+/* Global Page Styles */
+.page-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  line-height: 1.6;
+}
+
+/* Home Page Styles */
+.home-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.home-header h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+.home-header p {
+  font-size: 1.25rem;
+  color: #555;
+}
+.home-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.home-button {
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.button-primary {
+  background-color: #3498db;
+  color: white;
+}
+.button-primary:hover {
+  background-color: #2980b9;
+}
+.button-secondary {
+  background-color: #ecf0f1;
+  color: #333;
+}
+.button-secondary:hover {
+  background-color: #bdc3c7;
+}
+
+/* Rules Page Styles */
+.rules-page h2,
+.scores-page h2 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.rules-section ul {
+  padding-left: 20px;
+}
+.rules-section li {
+  margin-bottom: 0.75rem;
+}
+.credits-section {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+.credit-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.credit-links a {
+  font-weight: 600;
+  color: #3498db;
+  text-decoration: none;
+}
+.credit-links a:hover {
+  text-decoration: underline;
+}
+
+/* Game Page & Container Styles */
+.game-page {
+  max-width: 1000px;
+}
+
+.game-page h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.board-area {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.controls-area {
+  flex-basis: 250px;
+  flex-shrink: 0;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .board-area {
+    width: 100%;
+  }
+  .controls-area {
+    width: 90%;
+    max-width: 400px;
+    flex-basis: auto;
+  }
+}
+
+/* Sudoku Board Flexbox Styles */
+.sudoku-board {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #333;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+.board-row {
+  display: flex;
+  flex-direction: row;
+}
+.sudoku-cell.border-right-heavy {
+  border-right: 3px solid #333;
+}
+.sudoku-cell.border-bottom-heavy {
+  border-bottom: 3px solid #333;
+}
+
+/* Game Header & Timer Styles */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .game-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+}
+
+.timer-container {
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  min-width: 120px;
+}
+
+.timer-container h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.timer-display {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Congratulations Message Style */
+.congratulations-message {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #27ae60;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 8px;
+  border: 2px solid #a5d6a7;
+}
+
+/* Auth Form Styles (Login & Register) */
+.auth-page {
+  max-width: 500px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.form-group input {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.auth-form .button-primary {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background-color: #3498db;
+  color: white;
+}
+
+/* .auth-form rule */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+/* Scores Table Styles */
+.scores-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+}
+.scores-table th,
+.scores-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+.scores-table th {
+  background-color: #f4f4f4;
+  font-weight: 600;
+}
+.scores-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Game Selection Page Styles */
+.game-list-item {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Hint System Styles */
+.button-hint {
+  background-color: #f0ad4e;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.button-hint:hover:not(:disabled) {
+  background-color: #ec9b2e;
+}
+.controls-area .button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+.controls-area .button-group .button-hint {
+  grid-column: 1 / -1;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container > main {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  box-sizing: border-box;
+
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Navbar Buttons (Fix for Links) --- */
+
+/* 基础按钮样式，用于把 Link 变成按钮模样 */
+.nav-btn {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+/* 登录按钮风格 (Outline/透明背景) - 对应图片左边的 Log In */
+.nav-btn-login {
+  background-color: transparent;
+  border: 2px solid #bdc3c7; /* 浅灰色边框 */
+  color: #ecf0f1;            /* 浅灰色文字 */
+  margin-right: 10px;        /* 按钮之间的间距 */
+}
+
+.nav-btn-login:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 注册按钮风格 (Filled/实心背景) - 对应图片右边的 Sign Up */
+.nav-btn-signup {
+  background-color: #3498db; /* 蓝色背景 */
+  border: 2px solid #3498db;
+  color: white;
+}
+
+.nav-btn-signup:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+/* 登录后的状态容器优化 */
+.navbar-user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(0, 0, 0, 0.2); /* 稍微加深一点背景，突出用户信息 */
+  padding: 5px 15px;
+  border-radius: 20px;
+}
