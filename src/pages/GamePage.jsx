@@ -14,10 +14,10 @@ function GamePage() {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    // 1. 获取游戏数据
+
     if (gameId) loadGame(gameId);
 
-    // 2. 获取当前用户信息
+
     axios.get('/api/user/isLoggedIn')
       .then(res => setCurrentUser(res.data.username))
       .catch(() => setCurrentUser(null));
@@ -45,7 +45,7 @@ function GamePage() {
       try {
         await deleteGame(gameId);
         alert("Game deleted.");
-        navigate('/'); // 删完回首页
+        navigate('/'); 
       } catch (e) {
         alert("Failed to delete game.");
       }
@@ -97,7 +97,7 @@ function GamePage() {
                     Get Hint
                 </button>
 
-                {/* 🆕 Reset 按钮 */}
+                {/* Reset 按钮 */}
                 <button 
                     className="button-secondary"
                     onClick={handleReset}
@@ -107,7 +107,7 @@ function GamePage() {
                 </button>
              </div>
 
-             {/* 🗑️ DELETE 按钮: 只有创建者可见 */}
+             {/* DELETE 按钮: */}
              {isCreator && (
                <div style={{ marginTop: '2rem', borderTop: '1px solid #ddd', paddingTop: '1rem' }}>
                  <button 

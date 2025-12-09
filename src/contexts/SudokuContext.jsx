@@ -2,7 +2,6 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
 import { findNakedSingle } from '../utils/validation';
 
-// 检查是否胜利
 function checkWin(board, solution) {
   if (!board || !solution || board.length === 0) return false;
   return JSON.stringify(board) === JSON.stringify(solution);
@@ -13,9 +12,9 @@ const initialState = {
   title: '',
   creator: null,
   gameMode: 'normal',
-  initialBoard: [],       // 题目 (不可变)
-  solutionBoard: [],      // 答案
-  currentBoardState: [],  // 当前用户填写的状态
+  initialBoard: [],       
+  solutionBoard: [],      
+  currentBoardState: [],  
   selectedCell: null,
   hintCell: null,
   timer: 0,
@@ -42,7 +41,6 @@ function sudokuReducer(state, action) {
         gameMode: difficulty,
         initialBoard: puzzle,
         solutionBoard: solution,
-        // 深拷贝一份作为当前棋盘
         currentBoardState: puzzle.map(row => [...row]), 
         isLoading: false,
       };
@@ -56,7 +54,6 @@ function sudokuReducer(state, action) {
       const { row, col, value } = action.payload;
       const size = state.gameMode === 'easy' ? 6 : 9;
 
-      // 初始格子不能修改
       if (state.initialBoard[row][col] !== 0) return state;
       if (value < 0 || value > size) return state;
 
@@ -85,11 +82,9 @@ function sudokuReducer(state, action) {
       return state;
     }
 
-    // 🆕 新增：重置游戏逻辑
     case 'RESET_GAME': {
       return {
         ...state,
-        // 重新从 initialBoard 深拷贝一份
         currentBoardState: state.initialBoard.map(row => [...row]),
         selectedCell: null,
         hintCell: null,
@@ -112,7 +107,6 @@ const SudokuDispatchContext = createContext(undefined);
 export function SudokuProvider({ children }) {
   const [state, dispatch] = useReducer(sudokuReducer, initialState);
 
-  // 1. 创建游戏
   const createGame = async (difficulty) => {
     dispatch({ type: 'SET_LOADING' });
     try {
@@ -125,7 +119,7 @@ export function SudokuProvider({ children }) {
     }
   };
 
-  // 2. 加载游戏
+
   const loadGame = async (gameId) => {
     dispatch({ type: 'SET_LOADING' });
     try {
@@ -137,7 +131,7 @@ export function SudokuProvider({ children }) {
     }
   };
 
-  // 3. 删除游戏
+
   const deleteGame = async (gameId) => {
     try {
       await axios.delete(`/api/sudoku/${gameId}`);
@@ -147,7 +141,7 @@ export function SudokuProvider({ children }) {
     }
   };
 
-  // 4. 监听胜利
+
   useEffect(() => {
     if (state.isWon && state.gameId) {
        axios.post(`/api/sudoku/${state.gameId}/win`)
